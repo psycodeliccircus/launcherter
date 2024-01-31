@@ -13,7 +13,7 @@ function createWindow() {
     width: 1280,
     height: 800,
     minWidth: 800,
-    minHeight: 770,
+    minHeight: 860,
     icon: "build/icon.ico",
     autoHideMenuBar: true,
     webPreferences: {
@@ -21,6 +21,11 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: true,
     },
+  });
+
+  mainWindow.webContents.on('will-navigate', (event, url) => {
+    event.preventDefault();
+    shell.openExternal(url);
   });
 
   autoUpdater.checkForUpdates();

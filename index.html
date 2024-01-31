@@ -60,6 +60,17 @@
             margin: 0;
         }
 
+        #dev-rm {
+            position: fixed;
+            bottom: -20px;
+            width: -12px;
+            background-color: #2b2d2f;
+            padding: 13px;
+            text-align: center;
+            color: #ffffff;
+            margin: 0;
+        }
+
         .nav-tabs {
             margin-bottom: 20px;
         }
@@ -86,16 +97,13 @@
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="contact-tab-pane-tab" data-bs-toggle="pill" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contato</button>
             </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="disabled-tab-pane-tab" data-bs-toggle="pill" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Desenvolvido por: RenildoMarcio</button>
-            </li>
           </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                tabindex="0"><div id="buttons" class="mb-4"></div>
+                tabindex="0"><h1>Todos Arquivos para Download</h1><br><div id="buttons" class="mb-4"></div>
                 <div id="progress"></div></div>
             <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
-                tabindex="0"><p>Nossa Rede Social oficial: https://renildomarcio.com.br/pages/trilhaselite</p></div>
+                tabindex="0"><p>Nossa Rede Social oficial: <a class="btn btn-primary" href="https://renildomarcio.com.br/pages/trilhaselite" role="button">Trilha Elite Brasil</a></p></div>
             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
                 tabindex="0"><p>Nosso email oficial: renildomrc@gmail.com</p></div>
             <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab"
@@ -107,6 +115,10 @@
     <!-- Rodapé fixo -->
     <div id="launcher-version">
         <p>Launcher V 1.0.0</p>
+    </div>
+
+    <div id="dev-rm">
+        <p>Desenvolvido por: RenildoMarcio</p>
     </div>
 
     <script>
