@@ -40,9 +40,21 @@
              </li>
           </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                tabindex="0"><h1>Todos Arquivos para Download</h1><br><div id="buttons" class="mb-4"></div>
-                <div id="progress"></div></div>
+            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome do Arquivo</th>
+                            <th scope="col">Update do Arquivo</th>
+                            <th scope="col">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody id="buttonsTable">
+                    </tbody>
+                </table>
+            
+                <div id="progress"></div>
+            </div>
             <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                 tabindex="0"><h1>Redes Sociais</h1><br><p>Nossa Rede Social oficial: <a class="btn btn-primary" href="https://renildomarcio.com.br/pages/trilhaselite" role="button">Trilha Elite Brasil</a></p></div>
             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
@@ -69,7 +81,7 @@
 
     <!-- Rodapé fixo -->
     <div id="launcher-version">
-        <p>Launcher V 1.0.4</p>
+        <p>Launcher V 1.0.5</p>
     </div>
 
     <div id="dev-rm">
@@ -77,108 +89,122 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
-    <script>
-        function atualizarTabela() {
-            $.getJSON('https://api.renildomarcio.com.br/status_server.json', function(data) {
-                $('#statusTable tbody').empty();
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+    function atualizarTabela() {
+        $.getJSON('https://api.renildomarcio.com.br/status_server.json', function(data) {
+            $('#statusTable tbody').empty();
 
-                $.each(data, function(index, server) {
-                    var row = '<tr class="' + (index % 0 === 0 ? 'table-active' : '') + '">' +
-                                  '<th scope="row">' + (index + 1) + '</th>' +
-                                  '<td>' + server.serverId + '</td>' +
-                                  '<td class="status-' + server.status.toLowerCase() + '"><img src="status/' + server.status.toLowerCase() + '.png" width="26" height="26"><b>' + server.status + '</b></td>' +
-                                  '<td>' + server.host + '</td>' +
-                                  '<td><button type="button" class="btn btn-primary copy-button" data-clipboard-text="' + server.serverId + '">Copiar</button></td>' +
-                              '</tr>';
+            $.each(data, function(index, server) {
+                // Verificar se o status é offline ou manutenção
+                var isOfflineOrMaintenance = server.status.toLowerCase() === 'offline' || server.status.toLowerCase() === 'manutenção';
 
-                    $('#statusTable tbody').append(row);
-                });
+                // Criar a linha da tabela com ou sem o botão de cópia com base no status
+                var row = '<tr class="' + (index % 0 === 0 ? 'table-active' : '') + '">' +
+                              '<th scope="row">' + (index + 1) + '</th>' +
+                              '<td>' + server.serverId + '</td>' +
+                              '<td class="status-' + server.status.toLowerCase() + '"><img src="status/' + server.status.toLowerCase() + '.png" width="26" height="26"><b>' + server.status + '</b></td>' +
+                              '<td>' + server.host + '</td>' +
+                              (isOfflineOrMaintenance ? '<td><button type="button" class="btn btn-primary copy-button" disabled>Copiar</button></td>' :
+                                                        '<td><button type="button" class="btn btn-primary copy-button" data-clipboard-text="' + server.serverId + '">Copiar</button></td>') +
+                          '</tr>';
 
-                // Inicializar o Clipboard.js para o botão de cópia
-                var clipboard = new ClipboardJS('.copy-button');
-
-                // Exibir mensagem de sucesso ao copiar
-                clipboard.on('success', function(e) {
-                    alert('Server ID copiado para a área de transferência: ' + e.text);
-                    e.clearSelection();
-                });
-
-                // Exibir mensagem de erro ao falhar na cópia
-                clipboard.on('error', function(e) {
-                    alert('Falha ao copiar o Server ID. Por favor, selecione e copie manualmente.');
-                });
+                $('#statusTable tbody').append(row);
             });
-        }
 
-        atualizarTabela();
-        setInterval(atualizarTabela, 60000);
-    </script>
+            // Inicializar o Clipboard.js para o botão de cópia
+            var clipboard = new ClipboardJS('.copy-button');
 
-    <script>
-        const filesToDownload = [
-            'Base1_Trilhas_Elite.scs',
-            'Base2_Trilhas_Elite.scs',
-            'Base3_Trilhas_Elite.scs',
-            'Base4_Trilhas_Elite_DLCs.scs',
-            'Mapa_Trilhas_Elite.scs'
-        ];
+            // Exibir mensagem de sucesso ao copiar
+            clipboard.on('success', function(e) {
+                alert('Server ID copiado para a área de transferência: ' + e.text);
+                e.clearSelection();
+            });
 
-        const buttonsDiv = document.getElementById('buttons');
-        filesToDownload.forEach(fileName => {
-            const button = document.createElement('button');
-            button.textContent = `Download ${fileName}`;
-            button.onclick = () => startDownload(fileName);
-            button.className = 'btn btn-dark';
-            buttonsDiv.appendChild(button);
+            // Exibir mensagem de erro ao falhar na cópia
+            clipboard.on('error', function(e) {
+                alert('Falha ao copiar o Server ID. Por favor, selecione e copie manualmente.');
+            });
         });
+    }
 
-        function startDownload(fileName) {
-            window.api.send('startDownload', fileName);
-        }
+    atualizarTabela();
+    setInterval(atualizarTabela, 60000);
+</script>
+<script>
+    const filesToDownload = [
+        'Base1_Trilhas_Elite.scs',
+        'Base2_Trilhas_Elite.scs',
+        'Base3_Trilhas_Elite.scs',
+        'Base4_Trilhas_Elite_DLCs.scs',
+        'Mapa_Trilhas_Elite.scs'
+    ];
 
-        window.api.receive('downloadProgress', progress => {
-            const progressDiv = document.getElementById('progress');
-            progressDiv.innerHTML = `
-                <p>Arquivo: ${progress.fileName}</p>
-                <p>Tamanho total: ${formatBytes(progress.totalSize)}</p>
-                <p>Tamanho baixado: ${formatBytes(progress.downloadedSize)}</p>
-                <p>Velocidade: ${formatBytes(progress.speed)}/s</p>
-                <p>Porcentagem: ${progress.percentage.toFixed(2)}%</p>
-            `;
-        });
+    const buttonsTable = document.getElementById('buttonsTable');
 
-        window.api.receive('downloadCompleted', data => {
-            const progressDiv = document.getElementById('progress');
-            progressDiv.innerHTML = '';
+    filesToDownload.forEach(fileName => {
+        const row = buttonsTable.insertRow();
+        
+        const cell1 = row.insertCell(0);
+        cell1.textContent = fileName;
 
-            const alertDiv = document.createElement('div');
-            alertDiv.className = 'alert alert-success d-flex align-items-center';
-            alertDiv.setAttribute('role', 'alert');
-            alertDiv.innerHTML = `<div><strong>Download concluído para ${data.fileName}.</strong></div>`;
+        const cell2 = row.insertCell(1);
+        cell2.textContent = '31/01/2024';  // Atualize com o tamanho real do arquivo, se disponível.
 
-            document.getElementById('progress').insertAdjacentElement('afterbegin', alertDiv);
+        const cell3 = row.insertCell(2);
+        const button = document.createElement('button');
+        button.textContent = 'Download';
+        button.onclick = () => startDownload(fileName);
+        button.className = 'btn btn-dark';
+        cell3.appendChild(button);
+    });
 
+    function startDownload(fileName) {
+        window.api.send('startDownload', fileName);
+    }
+
+    window.api.receive('downloadProgress', progress => {
+        const progressDiv = document.getElementById('progress');
+        progressDiv.innerHTML = `
+            <p>Arquivo: ${progress.fileName}</p>
+            <p>Tamanho total: ${formatBytes(progress.totalSize)}</p>
+            <p>Tamanho baixado: ${formatBytes(progress.downloadedSize)}</p>
+            <p>Velocidade: ${formatBytes(progress.speed)}/s</p>
+            <p>Porcentagem: ${progress.percentage.toFixed(2)}%</p>
+        `;
+    });
+
+    window.api.receive('downloadCompleted', data => {
+        const progressDiv = document.getElementById('progress');
+        progressDiv.innerHTML = '';
+
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success d-flex align-items-center';
+        alertDiv.setAttribute('role', 'alert');
+        alertDiv.innerHTML = `<div><strong>Download concluído para ${data.fileName}.</strong></div>`;
+
+        document.getElementById('progress').insertAdjacentElement('afterbegin', alertDiv);
+
+        setTimeout(() => {
+            alertDiv.classList.add('fade');
             setTimeout(() => {
-                alertDiv.classList.add('fade');
-                setTimeout(() => {
-                    alertDiv.remove();
-                }, 1000);
-            }, 10000);
-        });
+                alertDiv.remove();
+            }, 1000);
+        }, 10000);
+    });
 
-        function formatBytes(bytes, decimals = 2) {
-            if (bytes === 0) return '0 Bytes';
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
 
-            const k = 1024;
-            const dm = decimals < 0 ? 0 : decimals;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-        }
-    </script>
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+</script>
 
     <!-- Bootstrap Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

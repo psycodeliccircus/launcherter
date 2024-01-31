@@ -30,6 +30,8 @@ function createWindow() {
 
   autoUpdater.checkForUpdates();
 
+  mainWindow.maximize();
+
   mainWindow.loadFile(path.join(__dirname, 'public/index.html'));
 
   mainWindow.on('closed', () => {

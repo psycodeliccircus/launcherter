@@ -40,7 +40,7 @@ button {
 #launcher-version {
     position: fixed;
     bottom: -20px;
-    right: -12px;
+    right: 2px;
     background-color: #2b2d2f;
     padding: 13px;
     text-align: center;
@@ -63,7 +63,6 @@ button {
     margin-bottom: 20px;
 }
 
-/* Estilo para a tabela */
 .table {
     width: 100%;
     margin-bottom: 1rem;
