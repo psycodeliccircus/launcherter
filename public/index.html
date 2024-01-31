@@ -5,79 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Launcher Trilhas Elite Brasil</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        body {
-            background-color: #343a40;
-            color: #ffffff;
-            padding-top: 20px;
-            margin-bottom: 40px;
-        }
-
-        .container {
-            background-color: #2b2d2f;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        h1 {
-            color: #f8f9fa;
-            text-align: center;
-        }
-
-        p {
-            text-align: center;
-        }
-
-        #buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        button {
-            margin-bottom: 10px;
-        }
-
-        #progress {
-            color: #ffffff;
-            text-align: center;
-        }
-
-        #launcher-version {
-            position: fixed;
-            bottom: -20px;
-            right: -12px;
-            background-color: #2b2d2f;
-            padding: 13px;
-            text-align: center;
-            color: #ffffff;
-            margin: 0;
-        }
-
-        #dev-rm {
-            position: fixed;
-            bottom: -20px;
-            width: -12px;
-            background-color: #2b2d2f;
-            padding: 13px;
-            text-align: center;
-            color: #ffffff;
-            margin: 0;
-        }
-
-        .nav-tabs {
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 
-<body>
+<body class="body">
     <div class="container">
         <h1 class="mt-4">
             <img src="https://renildomarcio.com.br/content/uploads/photos/2024/01/renildomarcio_e561cafdb1fa7b4ebdbdfe523968f662.png"
@@ -98,10 +33,10 @@
               <button class="nav-link" id="contact-tab-pane-tab" data-bs-toggle="pill" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contato</button>
             </li>
             <li class="nav-item" role="presentation">
-               <button class="nav-link" id="pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#pills-disabled" type="button" role="tab" aria-controls="pills-disabled" aria-selected="false" disabled>Servidor ETS2</button>
+               <button class="nav-link" id="server-ets-tab" data-bs-toggle="pill" data-bs-target="#server-ets" type="button" role="tab" aria-controls="server-ets" aria-selected="false">Servidor ETS2</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#pills-disabled" type="button" role="tab" aria-controls="pills-disabled" aria-selected="false" disabled>Servidor ATS</button>
+                <button class="nav-link" id="pills-disabled2-tab" data-bs-toggle="pill" data-bs-target="#pills-disabled2" type="button" role="tab" aria-controls="pills-disabled2" aria-selected="false" disabled>Servidor ATS</button>
              </li>
           </ul>
         <div class="tab-content" id="myTabContent">
@@ -112,20 +47,73 @@
                 tabindex="0"><h1>Redes Sociais</h1><br><p>Nossa Rede Social oficial: <a class="btn btn-primary" href="https://renildomarcio.com.br/pages/trilhaselite" role="button">Trilha Elite Brasil</a></p></div>
             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
                 tabindex="0"><h1>E-mails de contato</h1><br><p>Nosso email oficial: renildomrc@gmail.com</p></div>
-            <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab"
-                tabindex="0">Disabled Content...</div>
+            <div class="tab-pane fade" id="server-ets" role="tabpanel" aria-labelledby="server-ets-tab" tabindex="0">
+                <table id="statusTable" class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Server / ID</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Host</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- As linhas da tabela serão adicionadas dinamicamente aqui -->
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- End of Tabs Section -->
     </div>
 
     <!-- Rodapé fixo -->
     <div id="launcher-version">
-        <p>Launcher V 1.0.2</p>
+        <p>Launcher V 1.0.3</p>
     </div>
 
     <div id="dev-rm">
         <p>Desenvolvido por: RenildoMarcio</p>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+    <script>
+        function atualizarTabela() {
+            $.getJSON('https://api.renildomarcio.com.br/status_server.json', function(data) {
+                $('#statusTable tbody').empty();
+
+                $.each(data, function(index, server) {
+                    var row = '<tr class="' + (index % 0 === 0 ? 'table-active' : '') + '">' +
+                                  '<th scope="row">' + (index + 1) + '</th>' +
+                                  '<td>' + server.serverId + '</td>' +
+                                  '<td class="status-' + server.status.toLowerCase() + '"><img src="status/' + server.status.toLowerCase() + '.png" width="26" height="26"><b>' + server.status + '</b></td>' +
+                                  '<td>' + server.host + '</td>' +
+                                  '<td><button type="button" class="btn btn-primary copy-button" data-clipboard-text="' + server.serverId + '">Copiar</button></td>' +
+                              '</tr>';
+
+                    $('#statusTable tbody').append(row);
+                });
+
+                // Inicializar o Clipboard.js para o botão de cópia
+                var clipboard = new ClipboardJS('.copy-button');
+
+                // Exibir mensagem de sucesso ao copiar
+                clipboard.on('success', function(e) {
+                    alert('Server ID copiado para a área de transferência: ' + e.text);
+                    e.clearSelection();
+                });
+
+                // Exibir mensagem de erro ao falhar na cópia
+                clipboard.on('error', function(e) {
+                    alert('Falha ao copiar o Server ID. Por favor, selecione e copie manualmente.');
+                });
+            });
+        }
+
+        atualizarTabela();
+        setInterval(atualizarTabela, 60000);
+    </script>
 
     <script>
         const filesToDownload = [

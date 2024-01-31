@@ -1,0 +1,108 @@
+.body {
+    background-color: #343a40;
+    color: #ffffff;
+    padding-top: 20px;
+    margin-bottom: 40px;
+}
+
+.container {
+    background-color: #2b2d2f;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h1 {
+    color: #f8f9fa;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+#buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    margin-bottom: 10px;
+}
+
+#progress {
+    color: #ffffff;
+    text-align: center;
+}
+
+#launcher-version {
+    position: fixed;
+    bottom: -20px;
+    right: -12px;
+    background-color: #2b2d2f;
+    padding: 13px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0;
+}
+
+#dev-rm {
+    position: fixed;
+    bottom: -20px;
+    width: -12px;
+    background-color: #2b2d2f;
+    padding: 13px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0;
+}
+
+.nav-tabs {
+    margin-bottom: 20px;
+}
+
+/* Estilo para a tabela */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #fff;
+    background-color: #343a40;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+    background-color: #212529;
+}
+
+.table-active {
+    background-color: rgba(0, 0, 0, 0.125);
+}
+
+.status-online {
+    color: green;
+}
+
+.status-offline {
+    color: #dee2e6;
+}
+
+.status-manutenção {
+    color: rgb(223, 166, 9);
+}
+
+.status-manutencao {
+    color: rgb(223, 166, 9);
+}
+
+
+.copy-icon {
+    cursor: pointer;
+}
