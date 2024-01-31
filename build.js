@@ -39,7 +39,7 @@ class Index {
                     createStartMenuShortcut: true,
                     packElevateHelper: true,
                     createDesktopShortcut: true,
-                    shortcutName: "Launcher teb",
+                    shortcutName: "Launcher Trilhas Elite Brasil",
                     license: "./eula.txt"
                 },
                 mac: {
@@ -48,7 +48,9 @@ class Index {
                     target: [{
                         target: "dmg",
                         arch: ["x64", "arm64"]
-                    }]
+                    }],
+                    entitlements: "build/entitlements.plist",
+                    entitlementsInherit: "build/entitlementsInherit.plist"
                 },
                 linux: {
                     icon: "./build/icon.png",
