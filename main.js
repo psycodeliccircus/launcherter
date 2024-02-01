@@ -139,7 +139,7 @@ function handleUpdateError(err) {
 function handleUpdateNotAvailable(info) {
   const swalMessage = `Swal.fire({
       title: 'Atualizações',
-      html: 'Não há atualizações disponíveis.',
+      html: 'Não há atualizações disponíveis para o launcher.',
       icon: 'error'
     });`;
 

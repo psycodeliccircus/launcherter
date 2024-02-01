@@ -76,12 +76,10 @@
                 </table>
             </div>
         </div>
-        <!-- End of Tabs Section -->
     </div>
 
-    <!-- Rodapé fixo -->
     <div id="launcher-version">
-        <p>Launcher V 1.0.5</p>
+        <p>Launcher V 1.0.6</p>
     </div>
 
     <div id="dev-rm">
@@ -140,16 +138,25 @@
         'Mapa_Trilhas_Elite.scs'
     ];
 
+    // Array of dates corresponding to each file
+    const downloadDates = [
+        '05/01/2024 <h4><span class="badge bg-warning">Sem modificações</span></h4>',
+        '05/01/2024 <h4><span class="badge bg-warning">Sem modificações</span></h4>',
+        '05/01/2024 <h4><span class="badge bg-warning">Sem modificações</span></h4>',
+        '05/01/2024 <h4><span class="badge bg-warning">Sem modificações</span></h4>',
+        '30/01/2024 <h4><span class="badge bg-success">Novo</span></h4>'
+    ];
+
     const buttonsTable = document.getElementById('buttonsTable');
 
-    filesToDownload.forEach(fileName => {
+    filesToDownload.forEach((fileName, index) => {
         const row = buttonsTable.insertRow();
         
         const cell1 = row.insertCell(0);
         cell1.textContent = fileName;
 
         const cell2 = row.insertCell(1);
-        cell2.textContent = '31/01/2024';  // Atualize com o tamanho real do arquivo, se disponível.
+        cell2.innerHTML = downloadDates[index];
 
         const cell3 = row.insertCell(2);
         const button = document.createElement('button');
