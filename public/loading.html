@@ -6,7 +6,7 @@
       height: 100%;
       overflow: hidden;
       background-color: #343a40;
-      transition: background-color 1s ease; /* Adicionado para suavizar a mudança de cor de fundo */
+      transition: background-color 1s ease;
     }
 
     body {
@@ -15,7 +15,7 @@
 
     body.fade-out {
       opacity: 0;
-      animation: fadeOut 1s ease; /* Adicionado para suavizar a transição de opacidade */
+      animation: fadeOut 1s ease;
     }
 
     @keyframes fadeOut {
@@ -30,35 +30,53 @@
     .flex-container {
       height: 100%;
       padding: 0;
-      margin: 0;
-      display: flex;
+      margin: 299px;
       align-items: center;
       justify-content: center;
     }
 
     .loader-container {
-      text-align: center;
-    }
+  position: relative;
+  text-align: center;
+}
 
-    .loader {
-      width: 48px;
-      height: 48px;
-      border: 5px solid #ffffff;
-      border-bottom-color: transparent;
-      border-radius: 50%;
-      display: inline-block;
-      box-sizing: border-box;
-      animation: rotation 1s linear infinite;
-    }
+.loader {
+    width: 220px;
+    height: 220px;
+    position: relative;
+    top: -278px;
+    left: -2px;
+    transform: translate(-50%, -50%);
+    border: 19px solid rgb(243 0 91);
+    border-bottom-color: transparent;
+    border-radius: 220px;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 2s linear infinite;
+    z-index: 2;
+}
 
-    @keyframes rotation {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
+.dot {
+    position: absolute;
+    top: 165px;
+    left: 158px;
+    transform: translate(-50%, -50%);
+    width: 34px;
+    height: 34px;
+    background-color: rgb(243 0 91);
+    border-radius: 50%;
+    z-index: 3;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
   </style>
 
   <meta charset="UTF-8">
@@ -74,8 +92,10 @@
 <body class="body">
   <div id="container" class="flex-container">
     <div class="loader-container">
-      <img src="images/logo.png"><br>
-      <span class="loader"></span>
+      <img src="images/logo2.png"><br><br><br>
+      <span class="loader">
+        <div class="dot"></div>
+      </span>
     </div>
   </div>
 </body>
