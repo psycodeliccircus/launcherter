@@ -23,20 +23,44 @@ function createWindow() {
     },
   });
 
-  mainWindow.webContents.on('will-navigate', (event, url) => {
-    event.preventDefault();
-    shell.openExternal(url);
-  });
-
   autoUpdater.checkForUpdates();
 
   mainWindow.maximize();
 
-  mainWindow.loadFile(path.join(__dirname, 'public/index.html'));
+  // Carregar a tela de carregamento inicial
+  mainWindow.loadFile(path.join(__dirname, 'public/loading.html'));
+
+  // Criar webContents
+  let wc = mainWindow.webContents;
+
+  // Intercept links with "http" or "https" protocol and open in the default browser
+  wc.on('will-navigate', (event, url) => {
+    const parsedUrl = new URL(url);
+
+    // Check if the link is external (with "http" or "https" protocol)
+    if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+      event.preventDefault();
+      shell.openExternal(url);
+    }
+  });
+  
+  // Quando a página de carregamento inicial é totalmente carregada
+  wc.once('did-finish-load', () => {
+    // Aguardar 10 segundos antes de redirecionar para home.html
+    setTimeout(() => {
+      mainWindow.loadFile(path.join(__dirname, 'public/index.html'));
+    }, 10000);
+  });
+
+  // Se houver falha no carregamento, redirecionar para a página offline.html
+  wc.on('did-fail-provisional-load', (error, code) => {
+    mainWindow.loadFile(path.join(__dirname, 'public/offline.html'));
+  });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+  
 }
 
 app.whenReady().then(createWindow);

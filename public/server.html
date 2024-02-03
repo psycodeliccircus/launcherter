@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Launcher Trilhas Elite Brasil | By RenildoMarcio</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
@@ -30,7 +29,7 @@
             </div>
 
             <div class="sidebar">
-                <a href="index.html" class="active">
+                <a href="index.html">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
@@ -55,7 +54,7 @@
                     </span>
                     <h3>Reports</h3>
                 </a>
-                <a href="server.html">
+                <a href="server.html" class="active">
                     <span class="material-icons-sharp">
                         storage
                     </span>
@@ -73,107 +72,23 @@
 
         <!-- Main Content -->
         <main>
-          <h1>Analytics</h1>
-<!-- Analyses -->
-<div class="analyse">
-    <div class="sales">
-        <div class="status" id="downloadsStatus">
-            <div class="info">
-                <h3>Downloads</h3>
-                <h1 id="downloadsCount">0</h1>
-            </div>
-            <div class="progresss">
-                <svg>
-                    <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage" id="downloadsPercentage">
-                    <p>+0%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="visits">
-        <div class="status" id="newUsersStatus">
-            <div class="info">
-                <h3>Novos Usuarios</h3>
-                <h1 id="newUsersCount">0</h1>
-            </div>
-            <div class="progresss">
-                <svg>
-                    <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage" id="newUsersPercentage">
-                    <p>+0%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="searches">
-        <div class="status" id="searchesStatus">
-            <div class="info">
-                <h3>Buscas</h3>
-                <h1 id="searchesCount">0</h1>
-            </div>
-            <div class="progresss">
-                <svg>
-                    <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage" id="searchesPercentage">
-                    <p>+0%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End of Analyses -->
-
-            <!-- New Users Section -->
-            <div class="new-users">
-                <h2>Novos usuários Discord</h2>
-                <div class="user-list">
-                    <div class="user">
-                        <img src="images/profile-2.jpg">
-                        <h2>Jack</h2>
-                        <p>54 Min Atrás</p>
-                    </div>
-                    <div class="user">
-                        <img src="images/profile-3.jpg">
-                        <h2>Amir</h2>
-                        <p>3 Hours Ago</p>
-                    </div>
-                    <div class="user">
-                        <img src="images/profile-4.jpg">
-                        <h2>Ember</h2>
-                        <p>6 horas atrás</p>
-                    </div>
-                    <a href="https://discord.gg/gwpd6T5GTH"><div class="user">
-                        <img src="images/plus.png">
-                        <h2>Discord</h2>
-                        <p>Entrar na comunidade</p>
-                    </div></a>
-                </div>
-            </div>
-            <!-- End of New Users Section -->
-
-            <!-- Recent Orders Table -->
-            <div class="recent-orders">
-                <h2>Arquivos do Mapa</h2>
+            <!-- Recent Servers Table -->
+            <div class="recent-servers">
+                <h2>Todos nossos Servidores</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Nome do Arquivo</th>
-                            <th>Data de Lançamento</th>
-                            <th>Data de Update</th>
+                            <th>Server Nome</th>
+                            <th>Server ID</th>
+                            <th>Server Status</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
-                <div id="progress"></div>
-                <br>
             </div>
-            <!-- End of Recent Orders -->
+            <!-- End of Server Orders -->
 
         </main>
         <!-- End of Main Content -->
@@ -194,10 +109,8 @@
                         dark_mode
                     </span>
                 </div>
-
             </div>
             <!-- End of Nav -->
-
             <div class="user-profile">
                 <div class="logo">
                     <img src="images/logo.png">
@@ -205,7 +118,6 @@
                     <p>Developer</p>
                 </div>
             </div>
-
             <div class="reminders">
                 <div class="header">
                     <h2>Radio online</h2>
@@ -213,7 +125,6 @@
                         headset
                     </span>
                 </div>
-
                 <div class="notification">
                     <audio id="audioPlayer" controls autoplay>
                         <source src="https://stream.zeno.fm/dezugfchppftv" type="audio/mpeg">
@@ -228,17 +139,12 @@
                         audioPlayer.volume = 0.05;
                       </script>
                 </div>
-
             </div>
-
         </div>
-
-
     </div>
 
-    <script src="status_user.js"></script>
-    <script src="orders.js"></script>
-    <script src="order.js"></script>
+    <script src="servers.js"></script>
+    <script src="server.js"></script>
     <script src="index.js"></script>
 </body>
 
