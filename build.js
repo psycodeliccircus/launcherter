@@ -10,8 +10,8 @@ class Index {
         builder.build({
             config: {
                 generateUpdatesFilesForAllChannels: false,
-                appId: preductname,
-                productName: preductname,
+                appId: br.com.renildomarcio.launcherteb,
+                productName: Launcher-Trilha-Elite-Brasil,
                 icon: "./build/icon.ico",
                 copyright: "Copyright © 1984-2024 Trilhas Elite Brasil - Dev by RenildoMarcio",
                 artifactName: "${productName}-${os}-${arch}.${ext}",
