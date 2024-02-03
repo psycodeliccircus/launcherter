@@ -6,5 +6,5 @@ function updateVersion(newVersion) {
 
   // Exemplo de como chamar a função para atualizar a versão
   setTimeout(function() {
-    updateVersion('V1.1.0'); // Substitua pelo número da versão desejada
+    updateVersion('V1.1.1'); // Substitua pelo número da versão desejada
   }, 2000); // Isso muda a versão após 2 segundos, você pode ajustar conforme necessário

@@ -12,8 +12,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
-    minWidth: 800,
-    minHeight: 860,
+    minWidth: 1280,
+    minHeight: 800,
     icon: "build/icon.ico",
     autoHideMenuBar: true,
     webPreferences: {
@@ -161,13 +161,7 @@ function handleUpdateError(err) {
 }
 
 function handleUpdateNotAvailable(info) {
-  const swalMessage = `Swal.fire({
-      title: 'Atualizações',
-      html: 'Não há atualizações disponíveis para o launcher.',
-      icon: 'error'
-    });`;
-
-  mainWindow.webContents.executeJavaScript(swalMessage);
+  log.log(`Não há atualizações disponíveis para o launcher.`);
 }
 
 function handleUpdateDownloaded(info) {
