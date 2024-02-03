@@ -16,7 +16,7 @@ Servers.forEach(server => {
     copyButton.addEventListener('click', () => {
         // Copia o valor de ${server.serverNumber} para a área de transferência
         navigator.clipboard.writeText(server.serverNumber).then(() => {
-            alert('Número do servidor copiado com sucesso!');
+            alert('O ID do servidor copiado com sucesso!');
         }).catch((error) => {
             console.error('Erro ao copiar o número do servidor:', error);
         });

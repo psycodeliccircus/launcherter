@@ -64,7 +64,8 @@
                     <span class="material-icons-sharp">
                       screen_share
                     </span>
-                    <h3>V1.0.9</h3>
+                    <h3 id="versionList">V0.0.0</h3>
+                    <script src="versao.js"></script>
                 </a>
             </div>
         </aside>
@@ -139,6 +140,67 @@
                         audioPlayer.volume = 0.05;
                       </script>
                 </div>
+
+                <div class="header">
+                    <h2>Doações via Pix</h2>
+                    <span class="material-icons-sharp">
+                        apps
+                    </span>
+                </div>
+
+                <div class="notification deactive">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            apps
+                        </span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Doações via PIX</h3>
+                            <small class="text_muted">renildomarcio@meu.pix</small>
+                        </div>
+                        <span class="material-icons-sharp copy-icon" onclick="copiarEmail()">
+                            copy
+                        </span>
+                    </div>
+                
+                    <script>
+                        function copiarEmail() {
+                            // Seleciona o elemento que contém o endereço de e-mail
+                            var elementoEmail = document.querySelector('.text_muted');
+                    
+                            // Cria um campo de texto temporário
+                            var campoTemporario = document.createElement('textarea');
+                    
+                            // Define o valor do campo de texto como o endereço de e-mail
+                            campoTemporario.value = elementoEmail.textContent;
+                    
+                            // Adiciona o campo de texto ao corpo do documento
+                            document.body.appendChild(campoTemporario);
+                    
+                            // Seleciona e copia o texto do campo de texto
+                            campoTemporario.select();
+                            document.execCommand('copy');
+                    
+                            // Remove o campo de texto temporário
+                            document.body.removeChild(campoTemporario);
+                    
+                            // Exibe a mensagem de aviso
+                            alert('Endereço de e-mail copiado com sucesso: ' + elementoEmail.textContent);
+                        }
+                    </script>
+                    
+                </div>
+
+                <div class="notification deactive">
+                    <div class="content">
+                        <div class="info">
+                            <h3>Code QR Pix</h3>
+                            <img src="https://cdn.discordapp.com/attachments/878028811839623208/1198885865838088232/Screenshot_33.png">
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

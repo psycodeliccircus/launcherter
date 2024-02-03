@@ -3,6 +3,7 @@ Orders.forEach(order => {
     const tr = document.createElement('tr');
     const trContent = `
         <td>${order.productName}</td>
+        <td>${order.productVersion}</td>
         <td>${order.productNumber}</td>
         <td>${order.paymentStatus}</td>
         <td class="${order.status === 'Offline' ? 'danger' : order.status === 'Manutenção' ? 'warning' : order.status === 'Online' ? 'success' : 'primary'}">${order.status}</td>
@@ -14,12 +15,12 @@ Orders.forEach(order => {
     // Adiciona um ouvinte de evento de clique para o botão de download
     const downloadButton = tr.querySelector('.download-button');
     downloadButton.addEventListener('click', () => {
-        startDownload(order.productName);
+        startDownload(order.productLink);
     });
 });
 
-function startDownload(productName) {
-    window.api.send('startDownload', productName);
+function startDownload(productLink) {
+    window.api.send('startDownload', productLink);
 }
 
 window.api.receive('downloadProgress', progress => {

@@ -1,12 +1,12 @@
 {
   "name": "launcherteb",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Launcher do trilhas elite brasil.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build": "node build.js --build",
-    "icon": "node build.js --icon=https://renildomarcio.com.br/content/uploads/photos/2024/01/renildomarcio_e561cafdb1fa7b4ebdbdfe523968f662.png"
+    "icon": "node build.js --icon=https://raw.githubusercontent.com/psycodeliccircus/launcherter/main/public/images/logo.png"
   },
   "author": "RenildoMarcio",
   "license": "CC0-1.0",
