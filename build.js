@@ -10,8 +10,8 @@ class Index {
         builder.build({
             config: {
                 generateUpdatesFilesForAllChannels: false,
-                appId: br.com.renildomarcio.launcherteb,
-                productName: Launcher-Trilha-Elite-Brasil,
+                appId: com.github.psycodeliccircus.launcherteb,
+                productName: launcherteb,
                 icon: "./build/icon.ico",
                 copyright: "Copyright © 1984-2024 Trilhas Elite Brasil - Dev by RenildoMarcio",
                 artifactName: "${productName}-${os}-${arch}.${ext}",
