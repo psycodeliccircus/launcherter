@@ -1,4 +1,4 @@
-const downloadsPerPage = 5; // Número de downloads por página
+const downloadsPerPage = 8; // Número de downloads por página
 let currentPage = 1; // Página atual (pode ser dinâmico dependendo da sua lógica)
 
 // Função para calcular o índice inicial e final dos downloads para a página atual
@@ -23,7 +23,7 @@ function renderTable() {
     <td>${downloads.downloadsImg}</td>
     <td>${downloads.downloadsName}</td>
     <td class="${getVersionClass(downloads.downloadsStatus)}">${downloads.downloadsStatus}</td>
-    <td class="${getStatusClass(downloads.status)}">${downloads.status}</td>
+    <td class="${getStatusClass(downloads.status)}">V${downloads.status}</td>
     <td><a href="${downloads.downloadsLinks}"><button class="copy-button"><div class="icon"><span class="material-icons-sharp">cloud_download</span></div></button></a></td>
 `;
 

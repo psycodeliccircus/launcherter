@@ -7,6 +7,13 @@ const Downloads = [
         downloadsLinks: 'https://elitedarodagem.online/files/file/21-dlcs-ets2/'
     },
     {
+        downloadsName: 'DLCs ATS 1.49.3.9',
+        downloadsImg: '<img src="https://elitedarodagem.online/uploads/monthly_2023_12/20231208212753_1.jpg.43cc84a538a536effeea72ed4a95cfc9.jpg" alt="DLCs ATS 1.49.3.9" width="100px" height="100px">',
+        downloadsStatus: '1.49',
+        status: 'Online',
+        downloadsLinks: 'https://elitedarodagem.online/files/file/22-dlcs-ats/'
+    },
+    {
         downloadsName: 'COMIL CAMPIONE 3.65',
         downloadsImg: '<img src="https://dc3d.tech/wp-content/uploads/2024/01/ets2_20231017_172941_00-600x450.png" alt="COMIL CAMPIONE 3.65" width="100px" height="100px">',
         downloadsStatus: '1.49',
