@@ -784,3 +784,18 @@ main .recent-servers a{
     }
 
 }
+
+/* Adicione essas regras de estilo ao seu arquivo CSS existente ou crie um arquivo separado */
+
+.pagination {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p {
+    margin: 0 10px;
+    font-size: 16px;
+    color: var(--color-dark);
+}
