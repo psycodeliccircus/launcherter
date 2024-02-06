@@ -1,39 +1,67 @@
-const downloadsPerPage = 8; // Número de downloads por página
-let currentPage = 1; // Página atual (pode ser dinâmico dependendo da sua lógica)
+const downloadsPerPage = 7;
+let currentPage = 1;
 
-// Função para calcular o índice inicial e final dos downloads para a página atual
 function calculateRange(page, perPage) {
     const startIndex = (page - 1) * perPage;
     const endIndex = startIndex + perPage;
     return { startIndex, endIndex };
 }
 
-// Função para renderizar a tabela com downloads da página atual
 function renderTable() {
     const { startIndex, endIndex } = calculateRange(currentPage, downloadsPerPage);
     const filteredDownloads = Downloads.slice(startIndex, endIndex);
 
     // Limpa a tabela antes de adicionar os downloads da página atual
-    document.querySelector('table tbody').innerHTML = '';
+    const tbody = document.querySelector('table tbody');
+    tbody.innerHTML = '';
 
     // Adiciona os downloads filtrados à tabela
     filteredDownloads.forEach(downloads => {
         const tr = document.createElement('tr');
-        const trContent = `
-    <td>${downloads.downloadsImg}</td>
-    <td>${downloads.downloadsName}</td>
-    <td class="${getVersionClass(downloads.downloadsStatus)}">${downloads.downloadsStatus}</td>
-    <td class="${getStatusClass(downloads.status)}">V${downloads.status}</td>
-    <td><a href="${downloads.downloadsLinks}"><button class="copy-button"><div class="icon"><span class="material-icons-sharp">cloud_download</span></div></button></a></td>
-`;
+        tr.innerHTML = `
+            <td><img src="${downloads.downloadsImg}" alt="${downloads.downloadsName}" width="100px" height="100px"></td>
+            <td>${downloads.downloadsName}</td>
+            <td>${createCategoryButtons(downloads.downloadsCategoria)}</td>
+            <td>${downloads.downloadsData}</td>
+            <td class="${getVersionClass(downloads.downloadsStatus)}">V${downloads.downloadsStatus}</td>
+            <td class="${getStatusClass(downloads.status)}">${downloads.status}</td>
+            <td>${createDownloadButton(downloads.downloadsLinks)}</td>
+        `;
+        tbody.appendChild(tr);
+    });
 
-// Função para obter a classe de versão
+    // Adiciona a paginação no final da tabela
+    const totalPages = Math.ceil(Downloads.length / downloadsPerPage);
+    const paginationContainer = document.querySelector('.pagination');
+
+    if (totalPages > 1) {
+        paginationContainer.innerHTML = `
+            <button onclick="previousPage()" class="copy-button" ${currentPage > 1 ? '' : 'disabled'}>Anterior</button>
+            <p>Página ${currentPage} de ${totalPages}</p>
+            <button onclick="nextPage()" class="copy-button" ${currentPage < totalPages ? '' : 'disabled'}>Próxima</button>
+        `;
+    } else {
+        paginationContainer.innerHTML = ''; // Oculta os botões se não houver mais de uma página
+    }
+}
+
+function createCategoryButtons(categories) {
+    const categoryButtons = categories.split(',').map(category => {
+        return `<button class="category-button" disabled>${category.trim()}</button>`;
+    });
+
+    return categoryButtons.join(' ');
+}
+
+function createDownloadButton(link) {
+    return `<a href="${link}"><button class="copy-button"><div class="icon"><span class="material-icons-sharp">cloud_download</span></div></button></a>`;
+}
+
 function getVersionClass(version) {
-    const numericVersion = parseFloat(version.replace(/[^\d.]/g, '')); // Remove caracteres não numéricos
+    const numericVersion = parseFloat(version.replace(/[^\d.]/g, ''));
     return numericVersion >= 1.49 && numericVersion < 1.49 ? 'warning' : numericVersion >= 1.49 ? 'success' : 'danger';
 }
 
-// Função para obter a classe de status
 function getStatusClass(status) {
     switch (status) {
         case 'Offline':
@@ -47,21 +75,6 @@ function getStatusClass(status) {
     }
 }
 
-        tr.innerHTML = trContent;
-        document.querySelector('table tbody').appendChild(tr);
-    });
-
-    // Adiciona a paginação no final da tabela
-    const totalPages = Math.ceil(Downloads.length / downloadsPerPage);
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = `
-        <button onclick="previousPage()" class="copy-button">Anterior</button>
-        <p>Página ${currentPage} de ${totalPages}</p>
-        <button onclick="nextPage()" class="copy-button">Próxima</button>
-    `;
-}
-
-// Função para ir para a próxima página
 function nextPage() {
     const totalPages = Math.ceil(Downloads.length / downloadsPerPage);
     if (currentPage < totalPages) {
@@ -70,7 +83,6 @@ function nextPage() {
     }
 }
 
-// Função para ir para a página anterior
 function previousPage() {
     if (currentPage > 1) {
         currentPage--;

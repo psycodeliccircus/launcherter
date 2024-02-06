@@ -1,6 +1,7 @@
 // preload.js
 
-const { contextBridge, ipcRenderer, shell } = require('electron');
+const { contextBridge, ipcRenderer, shell, nativeImage, nativeTheme } = require('electron');
+const path = require('path');
 
 contextBridge.exposeInMainWorld('api', {
     getVersion: () => {
@@ -27,4 +28,29 @@ contextBridge.exposeInMainWorld('api', {
             }
         };
     }
+});
+
+const { Titlebar } = require('custom-electron-titlebar');
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Title bar implementation
+  const options = {
+    // options
+    backgroundColor: 'var(--color-background)',
+    overflow: 'auto',
+    icon: nativeImage.createFromPath(path.join(__dirname, 'public/icon.png')),
+    titleHorizontalAlignment: 'center',
+    minimizable: true,
+    maximizable: true,
+    closeable: true,
+    svgcolor: 'var(--color-dark)',
+    tooltips: {
+      minimize: 'Minimizar',
+      maximize: 'Maximizar',
+      restoreDown: 'Restaurar',
+      close: 'Fechar'
+    }
+  };
+  
+  new Titlebar(options);
 });

@@ -90,32 +90,15 @@
 <!-- End of Analyses -->
 
             <!-- New Users Section -->
-            <div class="new-users">
+            <div class="new-users" id="new-users">
                 <h2>Novos usuários Discord</h2>
-                <div class="user-list">
-                    <div class="user">
-                        <img src="images/profile-2.jpg">
-                        <h2>Jack</h2>
-                        <p>54 Min Atrás</p>
-                    </div>
-                    <div class="user">
-                        <img src="images/profile-3.jpg">
-                        <h2>Amir</h2>
-                        <p>3 Hours Ago</p>
-                    </div>
-                    <div class="user">
-                        <img src="images/profile-4.jpg">
-                        <h2>Ember</h2>
-                        <p>6 horas atrás</p>
-                    </div>
-                    <a href="https://discord.gg/gwpd6T5GTH"><div class="user">
-                        <img src="images/plus.png">
-                        <h2>Discord</h2>
-                        <p>Entrar na comunidade</p>
-                    </div></a>
+                <div class="user-list" id="user-list-content">
+                    <!-- Users will be dynamically added here -->
+                    <!-- Link para entrar na comunidade Discord -->
                 </div>
             </div>
             <!-- End of New Users Section -->
+            
 
             <!-- Recent Orders Table -->
             <div class="recent-orders">
@@ -260,8 +243,9 @@
 
     <script src="versao.js"></script>
 
-    <script src="status_user.js"></script>
-    <script src="orders.js"></script>
+    <script src="https://api.renildomarcio.com.br/launcher/att_use.php"></script>
+    <script src="https://api.renildomarcio.com.br/launcher/usuarios.php"></script>
+    <script src="https://api.renildomarcio.com.br/launcher/download_mods_server.php"></script>
     <script src="order.js"></script>
     <script src="index.js"></script>
 </body>

@@ -3,7 +3,7 @@ Orders.forEach(order => {
     const tr = document.createElement('tr');
     const trContent = `
         <td>${order.productName}</td>
-        <td>${order.productVersion}</td>
+        <td><button class="category-button" disabled>${order.productVersion}</button></td>
         <td>${order.productNumber}</td>
         <td>${order.paymentStatus}</td>
         <td class="${order.status === 'Offline' ? 'danger' : order.status === 'Manutenção' ? 'warning' : order.status === 'Online' ? 'success' : 'primary'}">${order.status}</td>

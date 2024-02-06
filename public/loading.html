@@ -6,6 +6,7 @@
       height: 100%;
       overflow: hidden;
       background-color: #181a1e;
+      color: white;
       transition: background-color 1s ease;
     }
 
@@ -75,6 +76,45 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #181a1e;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #181a1e;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #181a1e;
+  }
+
+.cet-control-icon svg {
+    width: 10px;
+    height: -webkit-fill-available;
+    fill:  #edeffd !important;
+    display: initial !important;
+    vertical-align: unset !important;
+}
+
+.cet-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px !important;
+    height: 30px !important;
+    margin-right: 3px !important;
+    margin-left: 29px !important;
+    z-index: 99;
+    overflow: hidden;
 }
 
   </style>

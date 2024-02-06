@@ -56,6 +56,78 @@ body{
     background-color: var(--color-background);
 }
 
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-background);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark);
+  }
+
+.cet-control-icon svg {
+    width: 10px;
+    height: -webkit-fill-available;
+    fill: var(--color-dark) !important;
+    display: initial !important;
+    vertical-align: unset !important;
+    cursor: pointer !important;
+}
+
+.cet-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px !important;
+    height: 30px !important;
+    margin-right: 3px !important;
+    margin-left: 29px !important;
+    z-index: 99;
+    overflow: hidden;
+    cursor: pointer !important;
+}
+
+.cet-menubar .cet-menubar-menu-button {
+    box-sizing: border-box;
+    padding: 0px 8px;
+    height: 100%;
+    cursor: pointer !important;
+    zoom: 1;
+    white-space: nowrap;
+    -webkit-app-region: no-drag;
+    outline: 0;
+}
+
+.category-button {
+    background-color: #14caa9;
+    color: var(--color-white);
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.category-button:disabled {
+    /*opacity: 0.5;*/
+    cursor: default;
+}
+
+.copy-button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
 a{
     color: var(--color-dark);
 }
@@ -408,7 +480,7 @@ main .recent-servers a{
 }
 
 .right-section{
-    margin-top: 1.4rem;
+    margin-top: 1.8rem;
 }
 
 .right-section .nav{

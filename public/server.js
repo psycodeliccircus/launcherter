@@ -3,7 +3,7 @@ Servers.forEach(server => {
     const tr = document.createElement('tr');
     const trContent = `
         <td>${server.serverName}</td>
-        <td>${server.serverNumber}</td>
+        <td><button class="category-button" disabled>${server.serverNumber}</button></td>
         <td class="${server.serverStatus === 'Offline' ? 'danger' : server.serverStatus === 'Online' ? 'success' : 'primary'}">${server.serverStatus}</td>
         <td class="${server.status === 'Offline' ? 'danger' : server.status === 'Manutenção' ? 'warning' : 'primary'}">${server.status}</td>
         <td><button class="copy-button"><div class="icon"><span class="material-icons-sharp">content_copy</span></div></button></td>

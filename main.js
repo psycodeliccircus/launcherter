@@ -1,12 +1,19 @@
-const { app, BrowserWindow, ipcMain, Tray, nativeImage, dialog, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, Tray, nativeImage, dialog, shell, Menu, nativeTheme } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const path = require('path');
 const fs = require('fs');
 const https = require('https');
 const os = require('os');
+const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
+
+setupTitlebar();
+
+const iconPath = path.join(__dirname, 'build/icon.png');
 
 let mainWindow;
+
+const appVersion = require('./package.json').version;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -14,48 +21,51 @@ function createWindow() {
     height: 800,
     minWidth: 1280,
     minHeight: 800,
-    icon: "build/icon.ico",
-    autoHideMenuBar: true,
+    frame: false,
+		titleBarStyle: 'hidden',
+		titleBarOverlay: false,
+    icon: iconPath,
     webPreferences: {
+      sandbox: false,
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: true,
     },
   });
 
+  const menu = Menu.buildFromTemplate(exampleMenuTemplate)
+	Menu.setApplicationMenu(menu)
+
   autoUpdater.checkForUpdates();
 
   mainWindow.maximize();
 
-  // Carregar a tela de carregamento inicial
   mainWindow.loadFile(path.join(__dirname, 'public/loading.html'));
 
-  // Criar webContents
   let wc = mainWindow.webContents;
 
-  // Intercept links with "http" or "https" protocol and open in the default browser
   wc.on('will-navigate', (event, url) => {
     const parsedUrl = new URL(url);
 
-    // Check if the link is external (with "http" or "https" protocol)
     if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
       event.preventDefault();
       shell.openExternal(url);
     }
   });
   
-  // Quando a página de carregamento inicial é totalmente carregada
   wc.once('did-finish-load', () => {
-    // Aguardar 10 segundos antes de redirecionar para home.html
+    const menu = Menu.buildFromTemplate(exampleMenuTemplate)
+	  Menu.setApplicationMenu(menu)
     setTimeout(() => {
       mainWindow.loadFile(path.join(__dirname, 'public/index.html'));
     }, 10000);
   });
 
-  // Se houver falha no carregamento, redirecionar para a página offline.html
   wc.on('did-fail-provisional-load', (error, code) => {
     mainWindow.loadFile(path.join(__dirname, 'public/offline.html'));
   });
+
+  attachTitlebarToWindow(mainWindow);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -63,7 +73,9 @@ function createWindow() {
   
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
@@ -80,12 +92,10 @@ global.startDownload = function (fileName) {
   const modFolderPath = path.join(os.homedir(), 'Documents', 'Euro Truck Simulator 2', 'mod');
   const filePath = path.join(modFolderPath, fileName);
 
-  // Cria o diretório se não existir
   if (!fs.existsSync(modFolderPath)) {
     fs.mkdirSync(modFolderPath, { recursive: true });
   }
 
-  // Remove o arquivo existente, se houver
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
   }
@@ -119,19 +129,16 @@ global.startDownload = function (fileName) {
     response.on('end', () => {
       console.log(`Download concluído para ${fileName}`);
       mainWindow.webContents.send('downloadCompleted', { fileName });
-      // Adicione qualquer lógica adicional após o término do download, se necessário.
     });
   }).on('error', (error) => {
     console.error(`Erro no download de ${fileName}: ${error.message}`);
   });
 };
 
-// Inicia o download quando receber o evento 'startDownload' do renderer
 ipcMain.on('startDownload', (event, fileName) => {
   startDownload(fileName);
 });
 
-// Funções de tratamento de atualizações
 function handleUpdateChecking() {
   log.log('Checking for updates.');
 }
@@ -184,3 +191,69 @@ autoUpdater.on('download-progress', handleDownloadProgress);
 autoUpdater.on('error', handleUpdateError);
 autoUpdater.on('update-not-available', handleUpdateNotAvailable);
 autoUpdater.on('update-downloaded', handleUpdateDownloaded);
+
+// Custom menu
+const exampleMenuTemplate = [
+	{
+		label: 'Launcher TEB v' + app.getVersion(),
+		submenu: [
+      {
+        label: 'Recarregar',
+        role: 'reload'
+      },
+      {
+        label: 'Forçar Recarregamento',
+        role: 'forceReload'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Zoom In',
+        role: 'zoomIn'
+      },
+      {
+        label: 'Zoom Out',
+        role: 'zoomOut'
+      },
+      {
+        label: 'Redefinir Zoom',
+        role: 'resetZoom'
+      },
+      //{ role: 'toggleDevTools', icon: path.resolve('public/images', 'logo.png') },
+      { type: 'separator' },
+			{
+				label: 'Sair',
+				click: () => app.quit()
+			}
+		]
+	},
+	{
+		label: '&Rede Sociais',
+		submenu: [
+			{
+				label: 'Youtube',
+        click() { shell.openExternal('https://youtube.com/renildomarcio'); } 
+			},
+      { type: 'separator' },
+      {
+				label: 'Comunidade Trilhas Elite Brasil',
+        click() { shell.openExternal('https://renildomarcio.com.br/pages/trilhaselite'); } 
+			},
+      {
+				label: 'Grupo Trilhas Elite Brasil',
+        click() { shell.openExternal('https://renildomarcio.com.br/groups/trilhaselite'); } 
+			},
+      { type: 'separator' }
+		]
+	},
+  {
+    label: '&Update',
+    submenu: [
+      { 
+        label: 'Verificar Update',
+        click() { autoUpdater.checkForUpdates() } 
+      }
+    ]
+  }
+]
