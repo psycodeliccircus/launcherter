@@ -128,6 +128,48 @@ body{
     cursor: default;
 }
 
+.category-server-online {
+    background-color: #14caa9;
+    color: var(--color-white);
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.category-server-online:disabled {
+    cursor: default;
+}
+
+.category-server-offline {
+    background-color: #ca1414;
+    color: var(--color-white);
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.category-server-offline:disabled {
+    cursor: default;
+}
+
+.category-server-manutecao {
+    background-color: #ca7514;
+    color: var(--color-white);
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.category-server-manutecao:disabled {
+    cursor: default;
+}
+
 a{
     color: var(--color-dark);
 }

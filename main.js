@@ -220,7 +220,7 @@ const exampleMenuTemplate = [
         label: 'Redefinir Zoom',
         role: 'resetZoom'
       },
-      //{ role: 'toggleDevTools', icon: path.resolve('public/images', 'logo.png') },
+      //{ role: 'toggleDevTools' },
       { type: 'separator' },
 			{
 				label: 'Sair',
