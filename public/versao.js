@@ -1,5 +1,5 @@
 // Fetch and include the menu content
-fetch('menu.html')
+fetch('https://api.renildomarcio.com.br/launcher/menu.php')
     .then(response => response.text())
     .then(menuHTML => {
         document.getElementById('menu-container').innerHTML = menuHTML;
