@@ -109,13 +109,14 @@ body{
 }
 
 .category-button {
-    background-color: #14caa9;
-    color: var(--color-white);
+    background-color: #5a14ca;
+    color: #fff;
     padding: 5px 10px;
     margin-right: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .category-button:disabled {
@@ -129,13 +130,14 @@ body{
 }
 
 .category-server-online {
-    background-color: #14caa9;
-    color: var(--color-white);
+    background-color: #1b7967;
+    color: #fff;
     padding: 5px 10px;
     margin-right: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .category-server-online:disabled {
@@ -144,12 +146,13 @@ body{
 
 .category-server-offline {
     background-color: #ca1414;
-    color: var(--color-white);
+    color: #fff;
     padding: 5px 10px;
     margin-right: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .category-server-offline:disabled {
@@ -158,12 +161,13 @@ body{
 
 .category-server-manutecao {
     background-color: #ca7514;
-    color: var(--color-white);
+    color: #fff;
     padding: 5px 10px;
     margin-right: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .category-server-manutecao:disabled {
