@@ -52,7 +52,7 @@ function createWindow() {
       shell.openExternal(url);
     }
   });
-  
+
   wc.once('did-finish-load', () => {
     const menu = Menu.buildFromTemplate(exampleMenuTemplate)
 	  Menu.setApplicationMenu(menu)
@@ -70,7 +70,7 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-  
+
 }
 
 app.whenReady().then(() => {
@@ -86,14 +86,13 @@ app.on('activate', () => {
 });
 
 // Função para iniciar o download
-global.startDownload = function (fileName) {
+global.startDownload = function (fileName, savePath) {
   const baseUrl = 'https://api.renildomarcio.com.br/ets2/mapa/';
   const fileUrl = `${baseUrl}${fileName}`;
-  const modFolderPath = path.join(os.homedir(), 'Documents', 'Euro Truck Simulator 2', 'mod');
-  const filePath = path.join(modFolderPath, fileName);
+  const filePath = path.join(savePath, fileName);
 
-  if (!fs.existsSync(modFolderPath)) {
-    fs.mkdirSync(modFolderPath, { recursive: true });
+  if (!fs.existsSync(savePath)) {
+    fs.mkdirSync(savePath, { recursive: true });
   }
 
   if (fs.existsSync(filePath)) {
@@ -135,8 +134,31 @@ global.startDownload = function (fileName) {
   });
 };
 
-ipcMain.on('startDownload', (event, fileName) => {
-  startDownload(fileName);
+// Manipulador IPC para iniciar o download com seleção de diretório
+ipcMain.handle('select-directory', async () => {
+  const result = await dialog.showOpenDialog({
+    properties: ['openDirectory']
+  });
+
+  if (result.canceled || !result.filePaths.length) {
+    return null;
+  }
+
+  return result.filePaths[0];
+});
+
+ipcMain.on('startDownload', async (event, fileName) => {
+  const selectedDirectory = await dialog.showOpenDialog({
+    properties: ['openDirectory']
+  });
+
+  if (selectedDirectory.canceled || !selectedDirectory.filePaths.length) {
+    console.log('Seleção de diretório cancelada');
+    return;
+  }
+
+  const savePath = selectedDirectory.filePaths[0];
+  startDownload(fileName, savePath);
 });
 
 function handleUpdateChecking() {
@@ -233,16 +255,16 @@ const exampleMenuTemplate = [
 		submenu: [
 			{
 				label: 'Youtube',
-        click() { shell.openExternal('https://youtube.com/renildomarcio'); } 
+        click() { shell.openExternal('https://youtube.com/renildomarcio'); }
 			},
       { type: 'separator' },
       {
 				label: 'Comunidade Trilhas Elite Brasil',
-        click() { shell.openExternal('https://renildomarcio.com.br/pages/trilhaselite'); } 
+        click() { shell.openExternal('https://renildomarcio.com.br/pages/trilhaselite'); }
 			},
       {
 				label: 'Grupo Trilhas Elite Brasil',
-        click() { shell.openExternal('https://renildomarcio.com.br/groups/trilhaselite'); } 
+        click() { shell.openExternal('https://renildomarcio.com.br/groups/trilhaselite'); }
 			},
       { type: 'separator' }
 		]
@@ -250,9 +272,9 @@ const exampleMenuTemplate = [
   {
     label: '&Update',
     submenu: [
-      { 
+      {
         label: 'Verificar Update',
-        click() { autoUpdater.checkForUpdates() } 
+        click() { autoUpdater.checkForUpdates() }
       }
     ]
   }
