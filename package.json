@@ -1,6 +1,6 @@
 {
   "name": "launcherteb",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Launcher do trilhas elite brasil.",
   "main": "main.js",
   "scripts": {
@@ -11,19 +11,19 @@
   "author": "RenildoMarcio",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^27.0.2",
-    "electron-builder": "^24.6.4"
+    "electron": "^32.0.1",
+    "electron-builder": "^24.13.3"
   },
   "dependencies": {
-    "axios": "^1.6.7",
+    "axios": "^1.7.6",
     "custom-electron-titlebar": "^4.2.8",
     "discord-rich-presence": "^0.0.8",
-    "electron-is-dev": "^2.0.0",
-    "electron-log": "^4.4.8",
-    "electron-updater": "^6.1.4",
+    "electron-is-dev": "^3.0.1",
+    "electron-log": "^5.1.7",
+    "electron-updater": "^6.2.1",
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
-    "jimp": "^0.22.10",
+    "jimp": "^0.22.12",
     "os": "^0.1.2",
     "path": "^0.12.7",
     "png2icons": "^2.0.1"
