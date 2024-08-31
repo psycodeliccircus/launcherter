@@ -10,10 +10,40 @@ const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-title
 setupTitlebar();
 
 const iconPath = path.join(__dirname, 'build/icon.png');
+const appVersion = require('./package.json').version;
+const exampleMenuTemplate = [
+  {
+    label: 'Launcher TEB v' + app.getVersion(),
+    submenu: [
+      { label: 'Recarregar', role: 'reload' },
+      { label: 'Forçar Recarregamento', role: 'forceReload' },
+      { type: 'separator' },
+      { label: 'Zoom In', role: 'zoomIn' },
+      { label: 'Zoom Out', role: 'zoomOut' },
+      { label: 'Redefinir Zoom', role: 'resetZoom' },
+      { type: 'separator' },
+      { label: 'Sair', click: () => app.quit() }
+    ]
+  },
+  {
+    label: '&Rede Sociais',
+    submenu: [
+      { label: 'Youtube', click: () => shell.openExternal('https://youtube.com/renildomarcio') },
+      { type: 'separator' },
+      { label: 'Comunidade Trilhas Elite Brasil', click: () => shell.openExternal('https://renildomarcio.com.br/pages/trilhaselite') },
+      { label: 'Grupo Trilhas Elite Brasil', click: () => shell.openExternal('https://renildomarcio.com.br/groups/trilhaselite') },
+      { type: 'separator' }
+    ]
+  },
+  {
+    label: '&Update',
+    submenu: [
+      { label: 'Verificar Update', click: () => autoUpdater.checkForUpdates() }
+    ]
+  }
+];
 
 let mainWindow;
-
-const appVersion = require('./package.json').version;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -22,8 +52,8 @@ function createWindow() {
     minWidth: 1280,
     minHeight: 800,
     frame: false,
-		titleBarStyle: 'hidden',
-		titleBarOverlay: false,
+    titleBarStyle: 'hidden',
+    titleBarOverlay: false,
     icon: iconPath,
     webPreferences: {
       sandbox: false,
@@ -33,20 +63,17 @@ function createWindow() {
     },
   });
 
-  const menu = Menu.buildFromTemplate(exampleMenuTemplate)
-	Menu.setApplicationMenu(menu)
+  const menu = Menu.buildFromTemplate(exampleMenuTemplate);
+  Menu.setApplicationMenu(menu);
 
   autoUpdater.checkForUpdates();
-
   mainWindow.maximize();
-
   mainWindow.loadFile(path.join(__dirname, 'public/loading.html'));
 
-  let wc = mainWindow.webContents;
+  const wc = mainWindow.webContents;
 
   wc.on('will-navigate', (event, url) => {
     const parsedUrl = new URL(url);
-
     if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
       event.preventDefault();
       shell.openExternal(url);
@@ -54,14 +81,12 @@ function createWindow() {
   });
 
   wc.once('did-finish-load', () => {
-    const menu = Menu.buildFromTemplate(exampleMenuTemplate)
-	  Menu.setApplicationMenu(menu)
     setTimeout(() => {
       mainWindow.loadFile(path.join(__dirname, 'public/index.html'));
     }, 10000);
   });
 
-  wc.on('did-fail-provisional-load', (error, code) => {
+  wc.on('did-fail-provisional-load', () => {
     mainWindow.loadFile(path.join(__dirname, 'public/offline.html'));
   });
 
@@ -70,7 +95,6 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-
 }
 
 app.whenReady().then(() => {
@@ -136,9 +160,7 @@ global.startDownload = function (fileName, savePath) {
 
 // Manipulador IPC para iniciar o download com seleção de diretório
 ipcMain.handle('select-directory', async () => {
-  const result = await dialog.showOpenDialog({
-    properties: ['openDirectory']
-  });
+  const result = await dialog.showOpenDialog({ properties: ['openDirectory'] });
 
   if (result.canceled || !result.filePaths.length) {
     return null;
@@ -148,9 +170,7 @@ ipcMain.handle('select-directory', async () => {
 });
 
 ipcMain.on('startDownload', async (event, fileName) => {
-  const selectedDirectory = await dialog.showOpenDialog({
-    properties: ['openDirectory']
-  });
+  const selectedDirectory = await dialog.showOpenDialog({ properties: ['openDirectory'] });
 
   if (selectedDirectory.canceled || !selectedDirectory.filePaths.length) {
     console.log('Seleção de diretório cancelada');
@@ -161,6 +181,7 @@ ipcMain.on('startDownload', async (event, fileName) => {
   startDownload(fileName, savePath);
 });
 
+// Manipuladores de atualização
 function handleUpdateChecking() {
   log.log('Checking for updates.');
 }
@@ -174,13 +195,11 @@ function handleDownloadProgress(progressObj) {
   log.log(message);
 
   const swalMessage = `Swal.fire({
-      title: 'Baixando atualização',
-      html: '${message}',
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-          Swal.showLoading();
-      }
-    });`;
+    title: 'Baixando atualização',
+    html: '${message}',
+    allowOutsideClick: false,
+    onBeforeOpen: () => Swal.showLoading()
+  });`;
 
   mainWindow.webContents.executeJavaScript(swalMessage);
 }
@@ -195,13 +214,11 @@ function handleUpdateNotAvailable(info) {
 
 function handleUpdateDownloaded(info) {
   const swalMessage = `Swal.fire({
-      title: 'Reiniciando o aplicativo',
-      html: 'Aguente firme, reiniciando o aplicativo para atualização!',
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-          Swal.showLoading();
-      }
-    });`;
+    title: 'Reiniciando o aplicativo',
+    html: 'Aguente firme, reiniciando o aplicativo para atualização!',
+    allowOutsideClick: false,
+    onBeforeOpen: () => Swal.showLoading()
+  });`;
 
   mainWindow.webContents.executeJavaScript(swalMessage);
   autoUpdater.quitAndInstall();
@@ -213,69 +230,3 @@ autoUpdater.on('download-progress', handleDownloadProgress);
 autoUpdater.on('error', handleUpdateError);
 autoUpdater.on('update-not-available', handleUpdateNotAvailable);
 autoUpdater.on('update-downloaded', handleUpdateDownloaded);
-
-// Custom menu
-const exampleMenuTemplate = [
-	{
-		label: 'Launcher TEB v' + app.getVersion(),
-		submenu: [
-      {
-        label: 'Recarregar',
-        role: 'reload'
-      },
-      {
-        label: 'Forçar Recarregamento',
-        role: 'forceReload'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Zoom In',
-        role: 'zoomIn'
-      },
-      {
-        label: 'Zoom Out',
-        role: 'zoomOut'
-      },
-      {
-        label: 'Redefinir Zoom',
-        role: 'resetZoom'
-      },
-      //{ role: 'toggleDevTools' },
-      { type: 'separator' },
-			{
-				label: 'Sair',
-				click: () => app.quit()
-			}
-		]
-	},
-	{
-		label: '&Rede Sociais',
-		submenu: [
-			{
-				label: 'Youtube',
-        click() { shell.openExternal('https://youtube.com/renildomarcio'); }
-			},
-      { type: 'separator' },
-      {
-				label: 'Comunidade Trilhas Elite Brasil',
-        click() { shell.openExternal('https://renildomarcio.com.br/pages/trilhaselite'); }
-			},
-      {
-				label: 'Grupo Trilhas Elite Brasil',
-        click() { shell.openExternal('https://renildomarcio.com.br/groups/trilhaselite'); }
-			},
-      { type: 'separator' }
-		]
-	},
-  {
-    label: '&Update',
-    submenu: [
-      {
-        label: 'Verificar Update',
-        click() { autoUpdater.checkForUpdates() }
-      }
-    ]
-  }
-]
