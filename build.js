@@ -25,10 +25,10 @@ class Index {
                 }],
                 win: {
                     icon: "./build/icon.ico",
-                    target: [{
-                        target: "nsis",
-                        arch: ["x64"]
-                    }],
+                    target: [
+                        { target: "nsis", arch: ["x64"] },
+                        { target: "portable", arch: ["x64"] }
+                    ],
                 },
                 nsis: {
                     installerIcon: "./build/icon.ico",
