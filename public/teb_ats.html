@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Launcher Trilhas Elite Brasil | By RenildoMarcio</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
@@ -35,69 +34,28 @@
 
         <!-- Main Content -->
         <main>
-          <h1>Analytics</h1>
-<!-- Analyses -->
-<div class="analyse">
-    <div class="sales">
-        <div class="status" id="downloadsStatus">
-            <div class="info">
-                <h3>Downloads</h3>
-                <h1 id="downloadsCount">0</h1>
+            <!-- Recent Servers Table -->
+            <div class="recent-orders">
+                <h2>Arquivos do Mapa</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome do mod</th>
+                            <th>Versão do Jogo</th>
+                            <th>Versão do Mod</th>
+                            <th>Data de Lançamento</th>
+                            <th>Data de Update</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div id="progress"></div>
+                <br>
             </div>
-            <div class="progresss">
-                <svg>
-                    <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage" id="downloadsPercentage">
-                    <p>+0%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="visits">
-        <div class="status" id="newUsersStatus">
-            <div class="info">
-                <h3>Novos Usuarios</h3>
-                <h1 id="newUsersCount">0</h1>
-            </div>
-            <div class="progresss">
-                <svg>
-                    <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage" id="newUsersPercentage">
-                    <p>+0%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="searches">
-        <div class="status" id="searchesStatus">
-            <div class="info">
-                <h3>Buscas</h3>
-                <h1 id="searchesCount">0</h1>
-            </div>
-            <div class="progresss">
-                <svg>
-                    <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage" id="searchesPercentage">
-                    <p>+0%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End of Analyses -->
+            <!-- End of Server Orders -->
 
-            <!-- New Users Section -->
-            <div class="new-users" id="new-users">
-                <h2>Novos usuários Discord</h2>
-                <div class="user-list" id="user-list-content">
-                    <!-- Users will be dynamically added here -->
-                    <!-- Link para entrar na comunidade Discord -->
-                </div>
-            </div>
-            <!-- End of New Users Section -->
         </main>
         <!-- End of Main Content -->
 
@@ -117,10 +75,8 @@
                         dark_mode
                     </span>
                 </div>
-
             </div>
             <!-- End of Nav -->
-
             <div class="user-profile">
                 <div class="logo">
                     <img src="images/dev.png">
@@ -128,7 +84,6 @@
                     <p>Developer</p>
                 </div>
             </div>
-
             <div class="reminders">
                 <div class="header">
                     <h2>Radio online</h2>
@@ -136,17 +91,16 @@
                         headset
                     </span>
                 </div>
-
                 <div class="notification">
                     <audio id="audioPlayer" controls autoplay>
                         <source src="https://stream.zeno.fm/wdzntbh2hfwtv" type="audio/mpeg">
                         Seu navegador não suporta a tag de áudio.
                       </audio>
-
+                      
                       <script>
                         // Get the audio element
                         var audioPlayer = document.getElementById('audioPlayer');
-
+                      
                         // Set the volume to 5%
                         audioPlayer.volume = 0.05;
                       </script>
@@ -174,32 +128,33 @@
                             copy
                         </span>
                     </div>
-
+                
                     <script>
                         function copiarEmail() {
                             // Seleciona o elemento que contém o endereço de e-mail
                             var elementoEmail = document.querySelector('.text_muted');
-
+                    
                             // Cria um campo de texto temporário
                             var campoTemporario = document.createElement('textarea');
-
+                    
                             // Define o valor do campo de texto como o endereço de e-mail
                             campoTemporario.value = elementoEmail.textContent;
-
+                    
                             // Adiciona o campo de texto ao corpo do documento
                             document.body.appendChild(campoTemporario);
-
+                    
                             // Seleciona e copia o texto do campo de texto
                             campoTemporario.select();
                             document.execCommand('copy');
-
+                    
                             // Remove o campo de texto temporário
                             document.body.removeChild(campoTemporario);
-
+                    
                             // Exibe a mensagem de aviso
-                            alert('Endereço pix copiado com sucesso: ' + elementoEmail.textContent);
+                            alert('Endereço de e-mail copiado com sucesso: ' + elementoEmail.textContent);
                         }
                     </script>
+                    
                 </div>
 
                 <div class="notification deactive">
@@ -212,16 +167,13 @@
                 </div>
 
             </div>
-
         </div>
-
-
     </div>
 
     <script src="versao.js"></script>
 
-    <script src="https://api.renildomarcio.com.br/launcher/att_use.php"></script>
-    <script src="https://api.renildomarcio.com.br/launcher/usuarios.php"></script>
+    <script src="https://api.renildomarcio.com.br/launcher/download_mods_server.php"></script>
+    <script src="https://api.renildomarcio.com.br/launcher/download_mods.php"></script>
     <script src="index.js"></script>
 </body>
 
